@@ -1,5 +1,7 @@
 package com.pankx.controller;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -86,6 +88,27 @@ public class UserController {
         filename = uuid + "_" +filename;
         //完成文件上传
         mvcuploadfile.transferTo(new File(path,filename));
+        return "success";
+    }
+
+    /**
+     * 跨服务器上传文件简单实例
+     * @param uptofileserver
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/uptofileserver")
+    public String uptofileserver(MultipartFile uptofileserver) throws IOException {
+        //文件服务的目录
+        String path = "http://localhost:8090/uploads/";
+        //获取文件的名称
+        String filename = uptofileserver.getOriginalFilename();
+        //创建客户端对象
+        Client client = Client.create();
+        //连接文件服务器
+        WebResource resource = client.resource(path+filename);
+        //上传文件到文件服务器
+        resource.put(uptofileserver.getBytes());
         return "success";
     }
 }
