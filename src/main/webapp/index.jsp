@@ -13,7 +13,7 @@
 <body>
     <h1>传统文件上传方式</h1>
 <%--    必须设置form的enctype的属性为multipart/form-data否则文件上传失败--%>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="upload/myupload" method="post" enctype="multipart/form-data">
         <input type="file" name="myfile">
         <hr/>
         <input type="submit" value="上传"/>
